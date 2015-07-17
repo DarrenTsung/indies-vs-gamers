@@ -1,0 +1,3 @@
+[submodule "indies-vs-gamers-game/Assets/Asset-Bundles/dt-unity-library"]
+	path = indies-vs-gamers-game/Assets/Asset-Bundles/dt-unity-library
+	url = https://github.com/DarrenTsung/dt-unity-library.git
