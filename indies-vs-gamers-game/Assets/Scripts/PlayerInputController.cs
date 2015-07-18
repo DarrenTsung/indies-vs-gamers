@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class PlayerInputController : MonoBehaviour {
-	public KeyCode LEFT_THRUSTER_KEY = KeyCode.A;
-	public KeyCode RIGHT_THRUSTER_KEY = KeyCode.D;
 	public KeyCode FORWARD_THRUSTER_KEY = KeyCode.W;
 	
 	protected PlayerController pController;
@@ -13,12 +11,15 @@ public class PlayerInputController : MonoBehaviour {
 	}
 	
 	protected void Update () {
-		if (Input.GetKey(LEFT_THRUSTER_KEY)) {
-			pController.HandleLeftThrusterPressed();
+		float hammerAxis = Input.GetAxis("HammerControl");
+		pController.HandleCurrentAxisPressed(hammerAxis);
+		
+		if (Input.GetKey(FORWARD_THRUSTER_KEY)) {
+			pController.HandleForwardThrusterPressed();
 		}
 		
-		if (Input.GetKey(RIGHT_THRUSTER_KEY)) {
-			pController.HandleRightThrusterPressed();
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			GameManager.Instance.Score += 1;
 		}
 	}
 }
