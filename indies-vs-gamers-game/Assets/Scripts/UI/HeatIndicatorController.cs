@@ -13,7 +13,7 @@ public class HeatIndicatorController : MonoBehaviour {
 		_pHeatController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<HeatController>();
 		_indicatorObject = transform.Find("Indicator").gameObject;
 		_indicatorTextMesh = _indicatorObject.transform.Find("TextMesh").gameObject.GetComponent<tk2dTextMesh>();
-		_indicatorBasePosition = _indicatorObject.transform.position;
+		_indicatorBasePosition = _indicatorObject.transform.localPosition;
 	}
 	
 	protected void Update() {
@@ -21,7 +21,7 @@ public class HeatIndicatorController : MonoBehaviour {
 	}
 	
 	protected void UpdateIndicator(float percentage) {
-		_indicatorObject.transform.position = _indicatorBasePosition + new Vector3(0.0f, indicatorHeight * percentage, 0.0f);
+		_indicatorObject.transform.localPosition = _indicatorBasePosition + new Vector3(0.0f, indicatorHeight * percentage, 0.0f);
 		
 		int percent = (int)(percentage * 100.0f);
 		_indicatorTextMesh.text = "Heat: " + percent.ToString() + "%";

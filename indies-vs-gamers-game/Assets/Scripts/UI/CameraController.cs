@@ -3,11 +3,86 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 	protected const float OUT_OF_BOUNDS_FORCE = 200.0f;
+	protected const float JUST_OUTSIDE_OFFSET = 2.0f;
+	protected const float FURTHER_OUTSIDE_OFFSET = 4.0f;
+	
 	protected const float speed = 1.5f; 
+	
+	public static CameraController MainCameraController() {
+		return Camera.main.GetComponent<CameraController>();
+	}
 
 	protected GameObject _target;
 	protected tk2dCamera _camera;
 	protected EdgeCollider2D _boundsCollider;
+	
+	public void Shake(float magnitude, float duration, float timeBetweenShakes) {
+		ShakeController shakeController = GetComponentInParent<ShakeController>();
+		if (shakeController) {
+			shakeController.Shake(magnitude, duration, timeBetweenShakes);
+		}
+	}
+
+	public void SetTarget(GameObject target) {
+		_target = target;
+	}
+	
+	public Vector3 RandomPointJustOutsideOfCamera() {
+		Rect cameraExtents = _camera.ScreenExtents;
+		
+		float xMin = cameraExtents.xMin - JUST_OUTSIDE_OFFSET;
+		float xMax = cameraExtents.xMax + JUST_OUTSIDE_OFFSET;
+		float yMin = cameraExtents.yMin - JUST_OUTSIDE_OFFSET;
+		float yMax = cameraExtents.yMax + JUST_OUTSIDE_OFFSET;
+		
+		float xDiff = xMax - xMin;
+		float yDiff = yMax - yMin;
+		float generatedValue = Random.Range(0.0f, 2.0f * xDiff + 2.0f * yDiff);
+		
+		bool flipped = false;
+		float generatedX = xMin, generatedY = yMin; 
+		
+	 	float xyCombined = xDiff + yDiff;
+		if (generatedValue > xyCombined) {
+			generatedValue -= xyCombined;
+			flipped = true;
+		}
+		
+		if (generatedValue <= xDiff) {
+			generatedX += generatedValue;
+		}
+		
+		generatedValue -= xDiff;
+		if (generatedValue >= 0.0f) {
+			generatedY += generatedValue;
+		}
+		
+		if (!flipped) {
+			return new Vector3(generatedX, generatedY, 0.0f);
+		} else {
+			return new Vector3(-generatedX, -generatedY, 0.0f);
+		}
+	}
+	
+	public bool IsOutsideGameThreshold(Vector3 point) {
+		Rect cameraExtents = _camera.ScreenExtents;
+		
+		Rect extendedExtents = new Rect(cameraExtents.xMin - FURTHER_OUTSIDE_OFFSET, 
+																		cameraExtents.yMin - FURTHER_OUTSIDE_OFFSET, 
+																		cameraExtents.width + 2.0f * FURTHER_OUTSIDE_OFFSET, 
+																		cameraExtents.height + 2.0f * FURTHER_OUTSIDE_OFFSET);
+		
+		Vector2[] newBounds = new Vector2[5];
+		newBounds[0] = new Vector2(extendedExtents.xMax, extendedExtents.yMax);
+		newBounds[1] = new Vector2(extendedExtents.xMin, extendedExtents.yMax);
+		newBounds[2] = new Vector2(extendedExtents.xMin, extendedExtents.yMin);
+		newBounds[3] = new Vector2(extendedExtents.xMax, extendedExtents.yMin);
+		newBounds[4] = new Vector2(extendedExtents.xMax, extendedExtents.yMax);
+		
+		_boundsCollider.points = newBounds;
+		
+		return !extendedExtents.Contains(point);
+	}
 
 	protected void Awake () {
 		_camera = GetComponent<tk2dCamera>();
@@ -15,11 +90,7 @@ public class CameraController : MonoBehaviour {
 
 	protected void Start() {
     SetTarget(GameObject.FindGameObjectsWithTag("Player")[0]);
-    //_boundsCollider = transform.Find("Bounds").gameObject.GetComponent<EdgeCollider2D>();
-	}
-
-	public void SetTarget(GameObject target) {
-		_target = target;
+    _boundsCollider = transform.Find("Bounds").gameObject.GetComponent<EdgeCollider2D>();
 	}
 
 	protected void Update () {

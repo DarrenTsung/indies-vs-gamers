@@ -9,9 +9,6 @@ public class PlayerInputController : MonoBehaviour {
 	}
 	
 	protected void Update () {
-		float hammerAxis = Input.GetAxis("HammerControl");
-		pController.HandleCurrentAxisPressed(hammerAxis);
-		
 		float horizontal = Input.GetAxis("pMovementHorizontal");
 		float vertical = Input.GetAxis("pMovementVertical");
 		
@@ -19,6 +16,11 @@ public class PlayerInputController : MonoBehaviour {
 		
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			GameManager.Instance.Score += 1;
+		}
+		
+		if (Input.GetKeyDown(KeyCode.J)) {
+			CameraController c = Camera.main.GetComponent<CameraController>();
+			c.Shake(0.7f, 0.2f, 0.03f);
 		}
 	}
 }
