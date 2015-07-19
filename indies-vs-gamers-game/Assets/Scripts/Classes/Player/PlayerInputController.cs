@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class PlayerInputController : MonoBehaviour {
-	public KeyCode FORWARD_THRUSTER_KEY = KeyCode.W;
-	
 	protected PlayerController pController;
 	
 	protected void Awake() {
@@ -14,9 +12,10 @@ public class PlayerInputController : MonoBehaviour {
 		float hammerAxis = Input.GetAxis("HammerControl");
 		pController.HandleCurrentAxisPressed(hammerAxis);
 		
-		if (Input.GetKey(FORWARD_THRUSTER_KEY)) {
-			pController.HandleForwardThrusterPressed();
-		}
+		float horizontal = Input.GetAxis("pMovementHorizontal");
+		float vertical = Input.GetAxis("pMovementVertical");
+		
+		pController.HandleMovementAxis(new Vector2(horizontal, vertical));
 		
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			GameManager.Instance.Score += 1;
