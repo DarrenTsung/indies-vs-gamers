@@ -90,7 +90,7 @@ public class GameStateManager : Singleton<GameStateManager> {
 				if (success) {
 					ShowTitleScreen();
 				} else {
-					ShowSignInScreen();
+					ShowTitleScreen();
 				}
 			});
 	}
