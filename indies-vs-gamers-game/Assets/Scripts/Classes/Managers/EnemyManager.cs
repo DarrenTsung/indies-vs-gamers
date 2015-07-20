@@ -35,14 +35,34 @@ public class EnemyManager : Singleton<EnemyManager> {
 					{TARGET_SCORE_KEY, 50}
 				},
         new Dictionary<string, float> {
+					{ENEMY_2_KEY, 60},
+					{ENEMY_2_MAX_SPEED_KEY, 6.5f},
+					{TARGET_SCORE_KEY, 60}
+				},
+        new Dictionary<string, float> {
+					{ENEMY_2_KEY, 80},
+					{ENEMY_2_MAX_SPEED_KEY, 7},
+					{TARGET_SCORE_KEY, 80}
+				},
+        new Dictionary<string, float> {
 					{ENEMY_2_KEY, 100},
 					{ENEMY_2_MAX_SPEED_KEY, 8},
 					{TARGET_SCORE_KEY, 100}
 				},
         new Dictionary<string, float> {
+					{ENEMY_2_KEY, 150},
+					{ENEMY_2_MAX_SPEED_KEY, 9},
+					{TARGET_SCORE_KEY, 200}
+				},
+        new Dictionary<string, float> {
 					{ENEMY_2_KEY, 200},
 					{ENEMY_2_MAX_SPEED_KEY, 10},
-					{TARGET_SCORE_KEY, 200}
+					{TARGET_SCORE_KEY, 400}
+				},
+        new Dictionary<string, float> {
+					{ENEMY_2_KEY, 300},
+					{ENEMY_2_MAX_SPEED_KEY, 15},
+					{TARGET_SCORE_KEY, 800}
 				},
     };
 				

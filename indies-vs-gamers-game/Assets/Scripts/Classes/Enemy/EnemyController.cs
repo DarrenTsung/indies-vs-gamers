@@ -81,7 +81,11 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 			CameraController c = CameraController.MainCameraController();
 			c.Shake(0.7f, 0.2f, 0.03f);
 			
-			GameManager.Instance.Score += 1;
+			ComboController pComboController = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<ComboController>();
+			
+			GameManager.Instance.Score += 1 * (1 + (int)(pComboController.ComboCount / 5));
+			
+			pComboController.AddHit();
 		}
 		
 		StartCoroutine(FinishDestruction());

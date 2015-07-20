@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour {
 	
 	protected void DestroySelf() {
 		CameraController c = CameraController.MainCameraController();
-		c.Shake(1.7f, 2.0f, 0.03f);
+		c.Shake(1.7f, 3.0f, 0.03f);
 		
 		ParticleSystem ps = transform.Find("PExplosionParticleSystem").gameObject.GetComponent<ParticleSystem>();
 		ps.Play();
@@ -84,11 +84,13 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	protected IEnumerator FinishDestruction() {
-	  yield return new WaitForSeconds(2.0f);
+	  yield return new WaitForSeconds(3.5f);
 		
+		/*
 		SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 		foreach (SpriteRenderer renderer in spriteRenderers) {
 			renderer.enabled = false;
 		}
+		*/
 	} 
 }
