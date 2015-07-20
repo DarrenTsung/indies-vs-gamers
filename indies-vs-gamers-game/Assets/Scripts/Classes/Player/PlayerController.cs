@@ -2,7 +2,7 @@ using DT.TweakableVariables;
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IGameStateInterface {
 	protected const float PLAYER_THRUSTER_FORCE_DEFAULT = 800.0f;
 	protected const float MOTOR_FORWARD_THRUST = 4.0f;
 	
@@ -24,11 +24,15 @@ public class PlayerController : MonoBehaviour {
 	protected float _currentHammerAxis;
 	protected bool _active = true;
 	
+	protected Vector3 _basePosition;
+	
 	public void HandleMovementAxis(Vector2 movementAxis) {
 		_currentMovementAxis = movementAxis;
 	}
 	
 	protected void Awake() {
+		_basePosition = transform.position;
+		
 		_thrusterForce = new TweakableFloat("_thrusterForce", 800.0f, 10000.0f, PLAYER_THRUSTER_FORCE_DEFAULT);
 		
 		_hammerObj = transform.Find("BiscuitHammer").gameObject;
@@ -40,6 +44,10 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	protected void FixedUpdate() {
+		if (!GameStateManager.Instance.Started) {
+			transform.position = _basePosition;
+		}
+		
 		if (!_active) {
 			return;
 		}
@@ -72,6 +80,10 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	protected void DestroySelf() {
+		if (!_active) {
+			return;
+		}
+		
 		CameraController c = CameraController.MainCameraController();
 		c.Shake(1.7f, 3.0f, 0.03f);
 		
@@ -84,7 +96,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	protected IEnumerator FinishDestruction() {
-	  yield return new WaitForSeconds(3.5f);
+	  yield return new WaitForSeconds(2.0f);
+		
+		GameStateManager.Instance.WinGame();
 		
 		/*
 		SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
@@ -93,4 +107,18 @@ public class PlayerController : MonoBehaviour {
 		}
 		*/
 	} 
+	
+	// PRAGMA MARK - IGameStateInterface
+	public void Reset() {
+		_heatController.Reset();
+		
+		ParticleSystem ps = transform.Find("PExplosionParticleSystem").gameObject.GetComponent<ParticleSystem>();
+		ps.Stop();
+		
+		_active = true;
+		
+		_rigidbody.velocity = new Vector2(0.0f, 0.0f);
+		
+		transform.position = _basePosition;
+	}
 }

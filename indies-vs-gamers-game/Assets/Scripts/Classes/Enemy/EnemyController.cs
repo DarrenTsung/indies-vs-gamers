@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyController : MonoBehaviour, IPoolableObject {
+public class EnemyController : MonoBehaviour, IPoolableObject, IGameStateInterface {
 	protected const float MIN_COLLISION_SPEED_TO_DESTROY = 20.0f;
 	
 	[SerializeField]
@@ -24,7 +24,10 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 			c.enabled = true;
 		}
 		
+		StopCoroutine(FinishDestruction());
+		
 		_beingDestroyed = false;
+		_active = true;
 	}
 	
 	protected void OnTriggerEnter2D(Collider2D other) {
@@ -110,5 +113,10 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 	
 	public void SetActive() {
 		_active = true;
+	}
+	
+	// PRAGMA MARK - IGameStateInterface
+	public void Reset() {
+		DestroySelf(true);
 	}
 }

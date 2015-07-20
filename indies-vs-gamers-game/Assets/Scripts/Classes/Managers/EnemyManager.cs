@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyManager : Singleton<EnemyManager> {
+public class EnemyManager : Singleton<EnemyManager>, IGameStateInterface {
 	protected const string ENEMY_2_KEY = "Enemy2";
 	protected const string ENEMY_2_MAX_SPEED_KEY = "Enemy2MaxSpeed";
 	protected const string TARGET_SCORE_KEY = "TargetScore";
@@ -69,7 +69,7 @@ public class EnemyManager : Singleton<EnemyManager> {
 	protected EnemyManager() {}
 	
 	public GameObject enemy2Template;
-	protected bool _spawning;
+	protected bool _spawning = false;
 	
 	public int CurrentWaveIndex {
 		get { return _currentWaveIndex; }
@@ -86,12 +86,6 @@ public class EnemyManager : Singleton<EnemyManager> {
 	protected void Awake() {
 		Enemy2Controller e2Controller = enemy2Template.GetComponent<Enemy2Controller>();
 		_enemy2Pool = new ObjectPool<Enemy2Controller>(gameObject, e2Controller);
-		
-		_spawning = true;
-	}
-	
-	protected void Start() {
-		StartWave(0);
 	}
 	
 	protected void StartWave(int index) {
@@ -135,5 +129,11 @@ public class EnemyManager : Singleton<EnemyManager> {
 		controller.ResetSelf();
 		Vector3 randomPosition = CameraController.MainCameraController().RandomPointJustOutsideOfCamera();
 		controller.SetPosition(randomPosition);
+	}
+	
+	// PRAGMA MARK - IGameStateInterface
+	void IGameStateInterface.Reset() {
+		_spawning = true;
+		StartWave(0);
 	}
 }

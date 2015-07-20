@@ -9,6 +9,10 @@ public class PlayerInputController : MonoBehaviour {
 	}
 	
 	protected void Update () {
+		if (GameStateManager.Instance.CurrentState == GameState.TITLE_SCREEN) {
+			return;
+		}
+		
 		float horizontal = Input.GetAxis("pMovementHorizontal");
 		float vertical = Input.GetAxis("pMovementVertical");
 		

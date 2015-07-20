@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeatController : MonoBehaviour {
+public class HeatController : MonoBehaviour, IGameStateInterface {
 	protected const float HEAT_DELAY = 1.5f;
 	protected const int HEAT_MAX = 200;
 	protected const float HEAT_INCREMENT_AMOUNT = 50.0f;
@@ -37,5 +37,10 @@ public class HeatController : MonoBehaviour {
 		// 		_heat = 0.0f;
 		// 	}
 		// }
+	}
+	
+	// PRAGMA MARK - IGameStateInterface
+	public void Reset() {
+		_heat = 0.0f;
 	}
 }

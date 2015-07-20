@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameManager : Singleton<GameManager> {
+public class GameManager : Singleton<GameManager>, IGameStateInterface {
 	public static Rect GAME_BOUNDS = new Rect(-100.0f, -100.0f, 200.0f, 200.0f);
 	
 	protected const float PLAYER_OUT_OF_BOUNDS_IMPULSE = 100.0f;
@@ -24,5 +24,10 @@ public class GameManager : Singleton<GameManager> {
 	
 	protected void FixedUpdate() {
 		
+	}
+	
+	// PRAGMA MARK - IGameStateInterface
+	public void Reset() {
+		Score = 0;
 	}
 }
