@@ -1,5 +1,7 @@
 # indies-vs-gamers
 
+GameJolt link: [[here](http://gamejolt.com/games/hammer-time/81014)]
+
 [Play the game here (development build)!](https://rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
 
 [Use this link if the first one doesn't work.](https://cdn.rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
