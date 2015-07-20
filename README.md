@@ -1,5 +1,9 @@
 # indies-vs-gamers
 
-[Play the game here (development build)!](https://rawgit.com/DarrenTsung/indies-vs-gamers/master/indies-vs-gamers-game/Builds/07_17_2015___10_28/07_17_2015___10_28.html)
+[Play the game here (development build)!](https://rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
 
-![Mockup](mockup.png)
+[Use this link if the first one doesn't work.](https://cdn.rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
+
+![Gameplay](gif_gameplay1.gif)
+![Gameplay](gif_gameplay2.gif)
+![Gameplay](gif_gameplay3.gif)
