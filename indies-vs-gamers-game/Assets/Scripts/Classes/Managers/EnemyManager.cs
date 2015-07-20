@@ -6,10 +6,13 @@ using System.Collections.Generic;
 
 public class EnemyManager : Singleton<EnemyManager> {
 	protected const string ENEMY_2_KEY = "Enemy2";
+	protected const string TARGET_SCORE_KEY = "TargetScore";
+	
 	protected static List<Dictionary<string, int>> _waveMap =
 		new List<Dictionary<string, int>>() {
 		        new Dictionary<string, int> {
-							{ENEMY_2_KEY, 200}
+							{ENEMY_2_KEY, 40},
+							{TARGET_SCORE_KEY, 50}
 						}
 		    };
 				

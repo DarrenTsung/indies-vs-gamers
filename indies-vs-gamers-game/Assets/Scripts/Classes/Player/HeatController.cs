@@ -21,7 +21,7 @@ public class HeatController : MonoBehaviour {
 
 	public void AddHeat(float percentage) {
 		if (percentage > 0.0f && _heat < HEAT_MAX) {
-			_heat += HEAT_INCREMENT_AMOUNT * percentage;
+			_heat += HEAT_MAX * percentage;
 			if (_heat > HEAT_MAX) {
 				_heat = HEAT_MAX;
 			}
@@ -30,12 +30,12 @@ public class HeatController : MonoBehaviour {
 	}
 	
 	protected void Update() {
-		_heatDelayTimer -= Time.deltaTime;
-		if (_heatDelayTimer <= 0.0f) {
-			_heat -= HEAT_DECREMENT_AMOUNT * Time.deltaTime;
-			if (_heat < 0.0f) {
-				_heat = 0.0f;
-			}
-		}
+		// _heatDelayTimer -= Time.deltaTime;
+		// if (_heatDelayTimer <= 0.0f) {
+		// 	_heat -= HEAT_DECREMENT_AMOUNT * Time.deltaTime;
+		// 	if (_heat < 0.0f) {
+		// 		_heat = 0.0f;
+		// 	}
+		// }
 	}
 }

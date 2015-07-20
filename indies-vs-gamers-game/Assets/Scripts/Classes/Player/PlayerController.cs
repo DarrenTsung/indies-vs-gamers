@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour {
 	protected HeatController _heatController;
 	
 	protected Vector2 _currentMovementAxis;
-	float _currentHammerAxis;
+	protected float _currentHammerAxis;
+	protected bool _active = true;
 	
 	public void HandleMovementAxis(Vector2 movementAxis) {
 		_currentMovementAxis = movementAxis;
@@ -34,10 +35,50 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	protected void FixedUpdate() {
+		if (!_active) {
+			return;
+		}
+		
 		UpdateMovement();
 	}
 	
 	protected void UpdateMovement() {
 		_rigidbody.velocity = _currentMovementAxis * ThrusterForce * Time.fixedDeltaTime;
 	}
+	
+	protected void OnTriggerEnter2D(Collider2D coll) {
+		if (!_active) {
+			return;
+		}
+		
+		CameraController c = CameraController.MainCameraController();
+		c.Shake(1.0f, 0.5f, 0.03f);
+		
+		_heatController.AddHeat(0.25f);
+		
+		if (_heatController.IsOverheated()) {
+			DestroySelf();
+		}
+	}
+	
+	protected void DestroySelf() {
+		CameraController c = CameraController.MainCameraController();
+		c.Shake(1.7f, 2.0f, 0.03f);
+		
+		ParticleSystem ps = transform.Find("PExplosionParticleSystem").gameObject.GetComponent<ParticleSystem>();
+		ps.Play();
+		
+		_active = false;
+		
+		StartCoroutine(FinishDestruction());
+	}
+	
+	protected IEnumerator FinishDestruction() {
+	  yield return new WaitForSeconds(2.0f);
+		
+		SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+		foreach (SpriteRenderer renderer in spriteRenderers) {
+			renderer.enabled = false;
+		}
+	} 
 }

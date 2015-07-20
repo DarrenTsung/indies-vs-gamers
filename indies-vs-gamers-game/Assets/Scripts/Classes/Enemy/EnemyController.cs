@@ -11,6 +11,30 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 	protected bool _active = true;
 	protected SpriteRenderer[] _spriteRenderers;
 	
+	public void SetPosition(Vector3 position) {
+		transform.position = position;
+	}
+	
+	public virtual void ResetSelf() {
+		foreach (SpriteRenderer renderer in _spriteRenderers) {
+			renderer.enabled = true;
+		}
+		
+		foreach(Collider c in GetComponentsInChildren<Collider>()) {
+			c.enabled = true;
+		}
+		
+		_beingDestroyed = false;
+	}
+	
+	protected void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag != "Player") {
+			return;
+		}
+		
+		DestroySelf(false);
+	}
+	
 	protected void OnCollisionEnter2D(Collision2D coll) {
 		if (!_active) {
 			return;
@@ -33,17 +57,6 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 		ResetSelf();
 	}
 	
-	public void SetPosition(Vector3 position) {
-		transform.position = position;
-	}
-	
-	public virtual void ResetSelf() {
-		foreach (SpriteRenderer renderer in _spriteRenderers) {
-			renderer.enabled = true;
-		}
-		_beingDestroyed = false;
-	}
-	
 	protected virtual void DestroySelf(bool silent) {
 		if (_beingDestroyed) {
 			return;
@@ -53,6 +66,10 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 		
 		foreach (SpriteRenderer renderer in _spriteRenderers) {
 			renderer.enabled = false;
+		}
+		
+		foreach(Collider c in GetComponentsInChildren<Collider>()) {
+			c.enabled = false;
 		}
 		
 		if (!silent) {
