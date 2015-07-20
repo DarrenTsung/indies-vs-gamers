@@ -1,6 +1,6 @@
 # indies-vs-gamers
 
-GameJolt link: [[here](http://gamejolt.com/games/hammer-time/81014)]
+GameJolt link: [[here](http://gamejolt.com/games/hammer-time/81014)] (Mac and Windows builds available here!)
 
 [Play the game here!](https://rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
 
