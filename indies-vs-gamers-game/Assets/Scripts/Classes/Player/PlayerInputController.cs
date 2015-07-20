@@ -22,5 +22,9 @@ public class PlayerInputController : MonoBehaviour {
 			CameraController c = Camera.main.GetComponent<CameraController>();
 			c.Shake(0.7f, 0.2f, 0.03f);
 		}
+		
+		if (Input.GetKeyDown(KeyCode.K)) {
+			EnemyManager.Instance.IncrementWave();
+		}
 	}
 }

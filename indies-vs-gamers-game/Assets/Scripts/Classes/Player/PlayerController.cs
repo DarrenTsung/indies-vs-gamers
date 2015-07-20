@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour {
 	protected const float PLAYER_THRUSTER_FORCE_DEFAULT = 800.0f;
 	protected const float MOTOR_FORWARD_THRUST = 4.0f;
 	
+	protected const float INJURED_MAX_EMISSION_RATE = 10.0f;
+	
 	protected TweakableFloat _thrusterForce;
 	
 	public float ThrusterForce {
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	protected GameObject _hammerObj;
 	protected Rigidbody2D _rigidbody;
 	protected HeatController _heatController;
+	protected ParticleSystem _injuredParticleSystem;
 	
 	protected Vector2 _currentMovementAxis;
 	protected float _currentHammerAxis;
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour {
 		_characterCenterObj = transform.Find("CharacterCenter").gameObject;
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_heatController = GetComponent<HeatController>();
+		
+		_injuredParticleSystem = transform.Find("PInjuredParticleSystem").gameObject.GetComponent<ParticleSystem>();
 	}
 	
 	protected void FixedUpdate() {
@@ -40,10 +45,15 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		UpdateMovement();
+		UpdateInjuredParticleSystem();
 	}
 	
 	protected void UpdateMovement() {
 		_rigidbody.velocity = _currentMovementAxis * ThrusterForce * Time.fixedDeltaTime;
+	}
+	
+	protected void UpdateInjuredParticleSystem() {
+		_injuredParticleSystem.emissionRate = _heatController.HeatPercentage * INJURED_MAX_EMISSION_RATE;
 	}
 	
 	protected void OnTriggerEnter2D(Collider2D coll) {

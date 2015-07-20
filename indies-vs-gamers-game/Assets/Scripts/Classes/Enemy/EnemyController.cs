@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 			renderer.enabled = true;
 		}
 		
-		foreach(Collider c in GetComponentsInChildren<Collider>()) {
+		foreach(Collider2D c in GetComponentsInChildren<Collider2D>()) {
 			c.enabled = true;
 		}
 		
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour, IPoolableObject {
 			renderer.enabled = false;
 		}
 		
-		foreach(Collider c in GetComponentsInChildren<Collider>()) {
+		foreach (Collider2D c in GetComponentsInChildren<Collider2D>()) {
 			c.enabled = false;
 		}
 		
