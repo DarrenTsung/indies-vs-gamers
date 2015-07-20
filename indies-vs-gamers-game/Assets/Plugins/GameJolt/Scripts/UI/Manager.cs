@@ -87,6 +87,11 @@ namespace GameJolt.UI
 		{
 			leaderboardsWindow.Show(callback);
 		}
+		
+		public void DismissLeaderboard()
+		{
+			leaderboardsWindow.Dismiss(true);
+		}
 		#endregion Leaderboards
 
 		#region Notifications

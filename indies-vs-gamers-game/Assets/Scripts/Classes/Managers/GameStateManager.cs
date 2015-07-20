@@ -28,22 +28,19 @@ public class GameStateManager : Singleton<GameStateManager> {
 		}
     int tableID = 0; 
     string extraData = ""; // This will not be shown on the website. You can store any information.
+		
+		GameJolt.UI.Manager.Instance.QueueNotification("Score: " + scoreValue.ToString()); 
     
+		winLoseInputBuffer = BUFFER_LENGTH;
+		CurrentState = GameState.WIN;
+		
     GameJolt.API.Scores.Add(scoreValue, scoreText, tableID, extraData, (bool success) => {
 			ShowLeaderboards();
     });
 	}
 	
 	public void ShowLeaderboards() {
-		GameJolt.UI.Manager.Instance.ShowLeaderboards(success => {
-			Debug.Log("Finished showing leaderboards!");
-				FinishWinningGame();
-			});
-	}
-		
-	public void FinishWinningGame() {
-		winLoseInputBuffer = BUFFER_LENGTH;
-		CurrentState = GameState.WIN;
+		GameJolt.UI.Manager.Instance.ShowLeaderboards();
 	}
 	
 	public void LoseGame() {
@@ -52,7 +49,7 @@ public class GameStateManager : Singleton<GameStateManager> {
 	}
 	
 	public void ResetGame() {
-		Debug.Log("Resetted game!");
+		GameJolt.UI.Manager.Instance.DismissLeaderboard();
 		CurrentState = GameState.GAME;
 	}
 	
@@ -99,13 +96,6 @@ public class GameStateManager : Singleton<GameStateManager> {
 	}
 		
 	protected void ShowTitleScreen() {
-		User currentUser = GameJolt.API.Manager.Instance.CurrentUser;
-		if (currentUser != null) {
-			GameJolt.UI.Manager.Instance.QueueNotification("Welcome " + currentUser.Name + "!"); 
-		} else {
-			GameJolt.UI.Manager.Instance.QueueNotification("Welcome guest!"); 
-		}
-		
 		_started = true;
 		startGameInputBuffer = BUFFER_LENGTH;
 		foreach (GameObject obj in _titleObjects) {

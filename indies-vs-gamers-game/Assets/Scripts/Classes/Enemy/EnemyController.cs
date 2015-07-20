@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyController : MonoBehaviour, IPoolableObject, IGameStateInterface {
-	protected const float MIN_COLLISION_SPEED_TO_DESTROY = 20.0f;
+	protected const float MIN_COLLISION_SPEED_TO_DESTROY = 10.0f;
 	
 	[SerializeField]
 	protected bool _beingDestroyed = false;
