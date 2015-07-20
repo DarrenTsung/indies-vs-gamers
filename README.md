@@ -6,6 +6,8 @@ GameJolt link: [[here](http://gamejolt.com/games/hammer-time/81014)]
 
 [Use this link if the first one doesn't work.](https://cdn.rawgit.com/DarrenTsung/indies-vs-gamers/master/hammer-time_web/hammer-time_web.html)
 
+![Header](Header1.png)
+
 ![Gameplay](gif_gameplay1.gif)
 ![Gameplay](gif_gameplay2.gif)
 ![Gameplay](gif_gameplay3.gif)
